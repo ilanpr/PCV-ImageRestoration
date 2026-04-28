@@ -84,6 +84,15 @@ def mean_filter(img, ksize=3):
 
     return output
 
+# Contrast
+def contrast_stretching(img):
+    min_val = np.min(img)
+    max_val = np.max(img)
+
+    stretched = (img - min_val) * 255 / (max_val - min_val + 1e-5)
+
+    return np.clip(stretched, 0, 255).astype(np.uint8)
+    
 # Pipeline
 def process_channel(channel):
     median = median_filter(channel, 5)
@@ -91,8 +100,8 @@ def process_channel(channel):
     mean = mean_filter(mean, 3)
     kernel = gaussian_kernel(3, 1)
     smooth = convolution(mean, kernel)
-    result = sharpening(smooth.astype(np.uint8))
-
+    sharp = sharpening(smooth.astype(np.uint8))
+    result = contrast_stretching(sharp)
     return result
 
 # MAIN
@@ -111,7 +120,7 @@ if __name__ == "__main__":
     result = cv2.merge((b, g, r))
 
     # simpan hasil
-    cv2.imwrite("Outputpcv/lena_restored.png", result)
+    cv2.imwrite("Outputpcv/lena_restoredcontrast.png", result)
 
     # tampilkan
     plt.figure(figsize=(10,5))
