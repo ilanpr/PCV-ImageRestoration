@@ -15,7 +15,7 @@ def median_filter(img, ksize=3):
 
     return output
 
-# Gaussian Kernel
+# Gaussian
 def gaussian_kernel(size=3, sigma=1):
     k = size // 2
     kernel = np.zeros((size, size))
@@ -84,15 +84,6 @@ def mean_filter(img, ksize=3):
 
     return output
 
-# Contrast
-def contrast_stretching(img):
-    min_val = np.min(img)
-    max_val = np.max(img)
-
-    stretched = (img - min_val) * 255 / (max_val - min_val + 1e-5)
-
-    return np.clip(stretched, 0, 255).astype(np.uint8)
-
 # Pipeline
 def process_channel(channel):
     median = median_filter(channel, 5)
@@ -100,8 +91,7 @@ def process_channel(channel):
     mean = mean_filter(mean, 3)
     kernel = gaussian_kernel(3, 1)
     smooth = convolution(mean, kernel)
-    sharp = sharpening(smooth.astype(np.uint8))
-    result = contrast_stretching(sharp)
+    result = sharpening(smooth.astype(np.uint8))
 
     return result
 
