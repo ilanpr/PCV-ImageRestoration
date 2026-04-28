@@ -25,10 +25,6 @@ Proses restorasi dilakukan secara bertahap pada setiap channel warna (B, G, R). 
 
 4. Sharpening (Unsharp Masking)
    Digunakan untuk mengembalikan detail yang hilang akibat proses smoothing sebelumnya.
-
-5. Contrast Stretching
-   Digunakan untuk meningkatkan kontras citra agar tidak terlihat pucat setelah proses denoising.
-
 ---
 
 ## Hasil
@@ -45,7 +41,6 @@ Hasil akhir juga akan disimpan pada folder output.
 * Median filter efektif untuk menghilangkan noise impuls (salt and pepper).
 * Mean dan Gaussian filter membantu mengurangi noise yang menyebar, namun membuat citra sedikit blur.
 * Sharpening membantu mengembalikan detail agar tidak terlalu halus.
-* Contrast stretching meningkatkan kontras tanpa memperparah noise.
 
 Kelebihan:
 
