@@ -1,7 +1,7 @@
 # Project Restorasi Citra (Image Restoration)
 
-**Nama:** [Ilan Hawwari Prasojo]  
-**NRP:** [5024241039]  
+**Nama:** Ilan Hawwari Prasojo  
+**NRP:** 5024241039 
 
 ---
 
