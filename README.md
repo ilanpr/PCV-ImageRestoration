@@ -1,40 +1,43 @@
-# Image Restoration
-## Deskripsi
+# Project Restorasi Citra (Image Restoration)
 
-Pada tugas ini dilakukan proses restorasi citra Lena yang telah mengalami beberapa kerusakan seperti:
+**Nama:** [Ilan Hawwari Prasojo]  
+**NRP:** [5024241039]  
 
-* Low contrast (kontras rendah)
-* Gaussian noise
-* Salt and pepper noise
-* Blur
-
-Tujuan dari program ini adalah memperbaiki kualitas citra agar mendekati kondisi yang lebih baik dan lebih jelas.
+---
 
 ## Pipeline Restorasi
 
-Proses restorasi dilakukan secara bertahap pada setiap channel warna (B, G, R). Teknik yang digunakan adalah sebagai berikut:
+Pada program ini, proses restorasi citra dilakukan per *channel* warna (B, G, R) menggunakan urutan (pipeline) pemrosesan spasial sebagai berikut:
 
-1. Median Filter
-   Digunakan untuk menghilangkan noise tipe salt and pepper. Filter ini bekerja dengan mengambil nilai median dari lingkungan sekitar pixel.
+1. **Median Filter (Kernel 5x5):**
+   * **Alasan:** Median filter sangat efektif untuk menghilangkan *impulse noise* atau *salt-and-pepper noise* tanpa banyak merusak tepi (edges) pada gambar. Kernel 5x5 dipilih untuk menangani intensitas noise awal yang cukup besar.
+2. **Mean Filter (Kernel 5x5):**
+   * **Alasan:** Digunakan untuk meratakan dan menghaluskan (*smoothing*) sisa-sisa noise yang mungkin tidak tertangani oleh median filter, seperti variansi *Gaussian noise*.
+3. **Mean Filter (Kernel 3x3):**
+   * **Alasan:** Diterapkan lagi dengan kernel yang lebih kecil untuk menghaluskan citra secara lebih detail setelah penghalusan kasar di tahap sebelumnya.
+4. **Gaussian Smoothing (Kernel 3x3, Sigma 1):**
+   * **Alasan:** Memberikan efek *blur* yang lebih natural dan terdistribusi normal dibandingkan *mean filter*. Ini berfungsi sebagai *base image* untuk tahap penajaman.
+5. **Sharpening (Unsharp Masking):**
+   * **Alasan:** Karena proses *filtering* (Median dan Mean) di tahap 1-4 menyebabkan gambar menjadi kabur (*blur*) dan kehilangan detail, tahap *sharpening* digunakan. Teknik yang digunakan mirip dengan *unsharp masking*, di mana detail gambar didapatkan dari selisih citra awal dengan citra yang di-*blur* (Gaussian), lalu ditambahkan kembali ke citra dengan faktor penguatan (*gain* = 1.8) untuk mempertegas tepi/detail.
 
-2. Mean Filter
-   Digunakan untuk menghaluskan noise yang lebih menyebar (seperti gaussian noise). Dilakukan dua kali untuk hasil yang lebih bersih.
-
-3. Gaussian Filter (Manual Convolution)
-   Digunakan untuk smoothing tambahan agar noise semakin berkurang dan hasil lebih natural.
-
-4. Sharpening (Unsharp Masking)
-   Digunakan untuk mengembalikan detail yang hilang akibat proses smoothing sebelumnya.
 ---
+**Hasil Visualisasi Sebelum dan Sesudah:**
+Sebelum:
+<img width="512" height="512" alt="lena_noisy" src="https://github.com/user-attachments/assets/8f9011b5-a2c8-498b-ad2b-3765542a5e2c" />
 
-## Hasil
+Sesudah:
+<img width="512" height="512" alt="lena_restored" src="https://github.com/user-attachments/assets/abf48aea-257e-44a0-b6b8-f1495bc6b975" />
 
-Program akan menampilkan perbandingan antara:
+**Hasil Visualisasi dengan Histogram:**
+<img width="855" height="713" alt="Figure 2026-05-05 230050" src="https://github.com/user-attachments/assets/3c33476c-ecd6-4b71-a7ca-c7d6e6742d90" />
 
-* Citra sebelum restorasi
-* Citra setelah restorasi
 
-Hasil akhir juga akan disimpan pada folder output.
+## Analisis
+Pipeline secara keseluruhan berhasil mereduksi noise pada gambar *noisy* awal. Perpaduan antara Median filter di awal sukses membuang noise titik (ekstrem), sementara Sharpening di akhir sukses memunculkan kembali beberapa garis tepi (edge) yang memudar. Perubahan distribusi piksel juga terlihat lebih baik pada grafik histogram, menunjukkan gambar tidak lagi didominasi oleh titik-titik noise.
+Penggunaan Mean filter secara berurutan (terutama dengan ukuran kernel 5x5 lalu 3x3) menyebabkan *smoothing* yang terlalu agresif (over-blurring). Hal ini membuat tekstur halus pada gambar asli (seperti detail rambut atau kulit) hilang secara permanen dan tidak bisa sepenuhnya dikembalikan oleh tahap *sharpening*.
+
+
+---
 
 ## Analisis
 
