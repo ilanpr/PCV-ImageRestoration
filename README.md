@@ -22,6 +22,7 @@ Pada program ini, proses restorasi citra dilakukan per *channel* warna (B, G, R)
 
 ---
 **Hasil Visualisasi Sebelum dan Sesudah:**
+
 Sebelum:
 <img width="512" height="512" alt="lena_noisy" src="https://github.com/user-attachments/assets/8f9011b5-a2c8-498b-ad2b-3765542a5e2c" />
 
@@ -30,6 +31,8 @@ Sesudah:
 
 **Hasil Visualisasi dengan Histogram:**
 <img width="855" height="713" alt="Figure 2026-05-05 230050" src="https://github.com/user-attachments/assets/3c33476c-ecd6-4b71-a7ca-c7d6e6742d90" />
+<img width="1723" height="3441" alt="image" src="https://github.com/user-attachments/assets/8655abe5-78b4-4e6d-83e3-2015749a57f7" />
+
 
 
 ## Analisis
